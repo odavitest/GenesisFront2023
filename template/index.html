@@ -10,9 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
     <link rel="stylesheet" href="./style.css">
+    <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
 </head>
 <body class="genesis">
     <div class="app"> <!-- This is wrapper div for React application -->
+        <div class="preloader active">
+            <div class="preloader-content bounce"></div>           
+        </div>
         <!-- Header section with logo and main menu -->
         <header class="container main-menu">
             <div class="main-menu__logo">
@@ -32,7 +36,7 @@
         </header>
         <!-- Advertisement section showing one hot-product     -->
         <section class="container course-adv">
-            <div class="course-adv__left">
+            <div id="adv" class="course-adv__left">
                 <h4 class="course-adv__left-date text-gradient orange">
                     Старт 30 січня
                 </h4>
@@ -46,7 +50,10 @@
                 <button class="btn filled-gradient orange text-20px">Переглянути</button>
             </div>
             <div class="course-adv__right">
-                <img class="profile-photo" src="./images/emblem.png" alt="profile photo" width="634" height="647">
+                <div class="course-rating">
+                    <div id="rating" class="stars text-16px">4,5</div>
+                </div>
+                <img id="course-image" class="profile-photo" src="./images/emblem.png" alt="profile photo" width="634" height="647">
             </div>
         </section>
         <!-- Section with company's slogan -->
@@ -82,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container list-courses__cards-block">       
+            <div id="list-courses" class="container list-courses__cards-block">       
                 
                 
                     <div class="list-courses__card">
@@ -281,7 +288,7 @@
             <div class="container list-courses__pagination">
                 <button class="pagination-left"></button>
                 <div class="pagination-page filled-gradient gray text-16px">Сторінка 1/4</div>
-                <button class="pagination-right"></button>
+                <button class="pagination-right on"></button>
             </div>
         </section>
         <!-- Footer of the page -->
@@ -359,6 +366,9 @@
             </div>
         </footer>
     </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
     
+    <script src="courses.js"></script>
 </body>
 </html>

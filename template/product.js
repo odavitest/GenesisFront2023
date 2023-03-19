@@ -1,7 +1,11 @@
 // Initialization
 console.log("Start");
+let currentUrl = new URL(location.href);
+let courseID = currentUrl.searchParams.get('course');
+courseID = (courseID) ? courseID : 'f58ff842-2d2b-4f24-9a4b-c6f6e1fd866e'; // '3b77ceb6-fb43-4cf5-a25b-8fe9222a0714';
+console.log("Current course ID is " + courseID);
+
 let coursePhoto = document.querySelector('.active-lesson-card .course-photo');
-console.log(coursePhoto);
 var player = videojs('player');
 
 //coursePhoto.addEventListener('mouseenter', (e) => startVideoPreview());
@@ -12,7 +16,7 @@ document.getElementById('lessons-container').addEventListener('click',
         target && !target.classList.contains('blocked') && switchLesson(target.getAttribute('data-index'));
     });
 
-let courseID = 'f58ff842-2d2b-4f24-9a4b-c6f6e1fd866e'; // '3b77ceb6-fb43-4cf5-a25b-8fe9222a0714';
+
 let activityInfoObj = [];
 
 //Check localStorage for previous activity
@@ -43,6 +47,7 @@ let allCoursesData = null;
 let courseData = null;
 
 console.log("Request for Token was sent!");
+preloaderToggle('on');
 axios.get(tokenAPIUrl).then((response) => {
     apiToken = response.data.token;
 
@@ -60,7 +65,7 @@ axios.get(tokenAPIUrl).then((response) => {
     axios.get(courseAPIUrl).then((response) => {
         courseData = response.data;
         updateDetailedPage(courseData);
-    
+        preloaderToggle('off');
     }).catch(error => {
         console.log('Error = ' + error.code);
     });
@@ -69,6 +74,7 @@ axios.get(tokenAPIUrl).then((response) => {
 function updateDetailedPage(data) {
     document.getElementById('course-title').innerText = data.title;
     document.getElementById('course-descr').innerText = data.description;
+    document.getElementById('rating').innerText = data.rating;
     document.getElementById('course-image').src = data.previewImageLink + '/cover.webp';
     let launchDate = new Date(data.launchDate)
         .toLocaleDateString('uk', 
@@ -154,4 +160,18 @@ function stopVideoPreview() {
     coursePhoto.removeChild(videoElement);
     //let iframeElement = document.querySelector('.active-lesson-card .course-photo iframe');
     //coursePhoto.removeChild(iframeElement);
+}
+
+function preloaderToggle(state) {
+    switch(state) {
+        case 'on': {
+            document.querySelector('.preloader').classList.add('active');
+            return true;
+        }
+        case 'off': {
+            document.querySelector('.preloader').classList.remove('active');
+            return true;
+        }
+        default: return false;
+    }
 }

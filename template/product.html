@@ -15,6 +15,9 @@
 </head>
 <body class="genesis">
     <div class="app"> <!-- This is wrapper div for React application -->
+        <div class="preloader active">
+            <div class="preloader-content bounce"></div>           
+        </div>
         <!-- Header section with logo and main menu -->
         <header class="container main-menu">
             <div class="main-menu__logo">
@@ -26,7 +29,7 @@
                 <label for="menu-btn"></label>
                 <ul>
                     <li><a href="#">Про нас</a></li>
-                    <li><a href="#">Наші курси</a></li>
+                    <li><a href="index.html">Наші курси</a></li>
                     <li><a href="#">Пошук</a></li>
                     <li><a href="#">Вхід</a></li>
                 </ul>
@@ -44,6 +47,9 @@
                     <p id="course-descr" class="text-22px text-italic">Reignite your inner drive by managing factors that dampen your motivation.</p>
                 </div>
                 <div class="course-adv__right">
+                    <div class="course-rating">
+                        <div id="rating" class="stars text-16px">4,5</div>
+                    </div>
                     <img id="course-image" class="profile-photo" src="./images/emblem.png" alt="profile photo" width="634" height="647">
                 </div>
             </div>
@@ -261,6 +267,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
     
-    <script src="myvideo.js"></script>
+    <script src="product.js"></script>
 </body>
 </html>
