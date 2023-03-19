@@ -3,7 +3,7 @@ It's just a repository for Genesis Front-End School 2023 Case
 
 ## Figma template
 Template for this project is created in Figma.
-Here is the [link](https://www.figma.com/file/wWHb5OOFRwdUtpEQfvdSDR/Genesis-Frontend-School-2.0?node-idthe =30%3A110&t=N7c6JWgDASpFKD7n-1)  
+Here is the [link](https://www.figma.com/file/wWHb5OOFRwdUtpEQfvdSDR/Genesis-Frontend-School-2.0?node-idthe=30%3A110&t=N7c6JWgDASpFKD7n-1)  
 
 ## HTML Template
 HTML + CSS template is located in the `\template` folder.
