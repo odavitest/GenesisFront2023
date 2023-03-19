@@ -35,6 +35,7 @@ How everything works:
 4) While staying on the `product.html` page, click on the lessons cards in the curriculum section to see the video lesson.
 5) If the lesson's status is "blocked" it will not be selectable.
 6) The API server is super slow, so the preloading picture is shown while the data is getting downloded.
+7) The local storage of a browser is used to remember the courses and lessons viewed in order to show the last seen video.
 
 More technical details:
 1) In order to show the videos, the [video.js](https://videojs.com/) player is used (I didn't manage to make hls.js working).
@@ -42,8 +43,19 @@ More technical details:
 
 TO DO:
 1) It's easy to make these webpages responsive (I'll do it ASAP)
-2) 
-
+2) Connection/communication erros can be easily handled using Axios fuctionality in the .then().catch() code sructure.
+3) Video preview should be started with some short delay to avoid cases when user just slides mouse across the page to some desired destination.
+4) If the progress in watching video can be considered as the user's progress, then it's possible to store the progress in the local storage and show it in the status line of each lesson.
 
 ## React powered website
 The React solution is located in the `\website` folder.
+
+TO DO:
+Unfortunately, since the webpages with all functionality were created "from scratch", no time left for converting the webpages to React SPA (or TPA - two pages application :) )
+
+Main steps to get React application working:
+1) The main structure has been created with the help of `npx create-react-app .`
+2) Add the following modules: styled-components and the react router
+3) Develop such components as "course card", "list of course cards", "pagination", "lesson card", "active lesson", etc.
+4) Just two more days of coding to get it done :)
+ 
