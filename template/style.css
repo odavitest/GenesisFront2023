@@ -237,12 +237,13 @@ body.genesis {
 }
 .list-courses__card .course-photo {
     width: 100%;
+    position: relative;
+    margin-bottom: 16px;
 }
 .list-courses__card .course-photo > img {
     width: 100%;
     height: 170px;
     object-fit: cover;
-    margin-bottom: 16px;
 }
 .list-courses__card .upper-status {
     display: flex;
@@ -697,6 +698,16 @@ body.genesis {
     64%  { transform: scale(1,1)      translateY(0); }
     100% { transform: scale(1,1)      translateY(0); }
 }
+
+.course-photo #player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
 
 
 

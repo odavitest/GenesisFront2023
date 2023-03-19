@@ -1,11 +1,53 @@
 // Initialization
 console.log("Start");
 let coursePhoto = document.querySelector('.active-lesson-card .course-photo');
-//var player = videojs('player');
+var player = null;
 
 //coursePhoto.addEventListener('mouseenter', (e) => startVideoPreview());
 //coursePhoto.addEventListener('mouseleave', (e) => stopVideoPreview());
+/*document.querySelectorAll('#list-courses .course-photo').forEach(node => {
+    node.addEventListener('mouseover', 
+    (e) => {
+        let target = e.target;
+        
+        //let currentUrl = new URL(location.href);
+        console.log(target.getAttribute('data-preview'));
+    })
+});*/
 
+/*    function() {
+        r()
+        u = setTimeout(function() {
+          a(t.parentNode).addClass("preview-loading")
+        }, 100)
+        s = document.createElement("VIDEO"), 
+        a(s).css({
+          position: "absolute",
+          left: "0",
+          top: "0",
+          width: t.offsetWidth + "px",
+          height: t.offsetHeight + "px",
+          background: "#000000",
+          visibility: "hidden"
+        })
+        a(s).on("error", function() { r() }) 
+        a(s).on("loadeddata", function() {
+          u && clearTimeout(u)
+          a(s.parentNode).removeClass("preview-loading")
+          a(s).css({
+            visibility: "visible"
+          })
+        }) 
+        s.controls = !1
+        s.autoplay = !0
+        s.muted = !0
+        s.loop = !0
+        s.src = e
+        s.setAttribute("webkit-playsinline", "true")
+        s.setAttribute("playsinline", "true")
+        t.parentNode.appendChild(s)
+      }
+*/
 document.getElementById('adv').addEventListener('click', 
     (e) => {
         let target = e.target.closest('button');
@@ -16,10 +58,12 @@ document.getElementById('adv').addEventListener('click',
 
 document.getElementById('list-courses').addEventListener('click', 
     (e) => {
-        let target = e.target.closest('button');
-        let courseUrl = target.getAttribute('data-url');
-        //let currentUrl = new URL(location.href);
-        target && (location.href = courseUrl);
+        let target = e.target.closest('button.btn');
+        if (target) {
+            let courseUrl = target.getAttribute('data-url');
+            console.log(target, courseUrl);
+            target && (location.href = courseUrl);
+        }
     });
 
 document.querySelector('.list-courses__pagination').addEventListener('click', 
@@ -34,12 +78,6 @@ document.querySelector('.list-courses__pagination').addEventListener('click',
             updateCoursesList(allCoursesData);
         };
     });
-    
-// document.getElementById('lessons-container').addEventListener('click', 
-//     (e) => {
-//         let target = e.target.closest('.lesson-card');
-//         target && !target.classList.contains('blocked') && switchLesson(target.getAttribute('data-index'));
-//     });
 
 // Get an API key
 let tokenAPIUrl = 'https://api.wisey.app/api/v1/auth/anonymous?platform=subscriptions';
@@ -134,7 +172,7 @@ function updateCoursesList(data) {
                         <div class="price text-orange text-16px">Безкоштовно</div>
                         <div class="stars text-16px">${course.rating}</div>
                     </div>
-                    <div class="course-photo">
+                    <div class="course-photo" data-preview="${course.meta.courseVideoPreview.link}">
                         <img src="${course.previewImageLink + '/cover.webp'}" alt="preview">
                     </div>
                     <div class="course-avail card-wrapper text-orange text-12px">${(course.status === 'launched') ? 'Доступно з ' + launchDate : 'Стартуємо ' + launchDate}</div>
@@ -166,27 +204,33 @@ function updateCoursesList(data) {
         (currentPage > 1) ? pl.classList.add('on') : pl.classList.remove('on');
         (currentPage < numberPages) ? pr.classList.add('on') : pr.classList.remove('on');
     }
+    document.querySelectorAll('#list-courses .course-photo').forEach(node => {
+        node.addEventListener('mouseenter', 
+        (e) => {
+            let target = e.target.closest('.course-photo');
+            console.log(target);
+            let preview = target.getAttribute('data-preview');
+            
+            let videoMarkup = `
+                <video id="player" width="960" height="540" class="video-js vjs-default-skin" controls muted autoplay pictureinpicture preload="auto">
+                    <source src="${preview}" type="application/x-mpegURL">
+                </video>`;
+            
+            player && player.player_ && player.dispose();
+            target.insertAdjacentHTML('beforeend', videoMarkup);
 
-    // // Render active lesson card
-    // let activeLesson = activityInfoObj.find(course => course.id === courseID).activeLesson;
-    // document.getElementById('active-lesson-photo').src = data.lessons[activeLesson-1].previewImageLink + '/lesson-' + data.lessons[activeLesson-1].order + ".webp";
-    // let videoMarkup = `
-    //         <video id="player" width="1920" height="1080" poster="${data.lessons[activeLesson-1].previewImageLink + '/lesson-' + data.lessons[activeLesson-1].order + '.webp'}" class="video-js vjs-default-skin" controls preload="auto">
-    //         <source src="${data.lessons[activeLesson-1].link}" type="application/x-mpegURL">
-    //     </video>`;
-    
-    // player && player.dispose();
-    // coursePhoto.insertAdjacentHTML('beforeend', videoMarkup);
-    // player = videojs('player'); //reinitialize player element
-    // document.getElementById('active-lesson-number').innerText = activeLesson;
-    // document.getElementById('active-lesson-descr').innerText = data.lessons[activeLesson-1].title;
-}
+            player = videojs('player'); //reinitialize player element
+            console.log(player);
 
-function switchLesson(lesson) {
-    console.log('We are switching to lesson ' + lesson);
-    activityInfoObj.find(course => course.id === courseID).activeLesson = +lesson;
-    console.log(activityInfoObj);
-    updateDetailedPage(courseData);
+        });
+        node.addEventListener('mouseleave', 
+        (e) => {
+            let target = e.target.closest('.course-photo');
+            console.log(player);
+            player && player.player_ && player.dispose();
+
+        });
+    });
 }
 
 function startVideoPreview() {
