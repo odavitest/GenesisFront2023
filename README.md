@@ -29,7 +29,7 @@ Prerequisites:
 2) Use any simple Live Server, like the one coming with the VS Code.
 
 How everything works:
-1) Open `index.html`. The most interesting part of it is the cards with the lessons. If user keeps mouse over the preview picture of the course, the video preview starts automatically.
+1) Open `index.html`. The most interesting part of it is the cards with the courses. If user keeps mouse over the preview picture of the course, the video preview starts automatically.
 2) Press any of the buttons "Переглянути" in either of the sections. You may use the pagination controls to find the page with required course.
 3) Upon pressing the button, the page `product.html` will be open with the parameter `?course=<course.id>`. This parameter is recognized by the script, so the correct course will be fetched from the API server and displayed on the page.
 4) While staying on the `product.html` page, click on the lessons cards in the curriculum section to see the video lesson.
