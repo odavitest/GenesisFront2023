@@ -121,6 +121,7 @@ function updateCoursesList(data) {
                         minute: "2-digit",
                         hour: "2-digit"
                     });
+                    
             const markup = `
             <div class="list-courses__card">
                 <div>
@@ -128,7 +129,7 @@ function updateCoursesList(data) {
                         <div class="price text-orange text-16px">Безкоштовно</div>
                         <div class="stars text-16px">${course.rating}</div>
                     </div>
-                    <div class="course-photo" data-preview="${course.meta.courseVideoPreview.link}">
+                    <div class="course-photo" data-preview="${(course?.meta?.courseVideoPreview?.link) ? course.meta.courseVideoPreview.link : 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'}">
                         <img src="${course.previewImageLink + '/cover.webp'}" alt="preview">
                     </div>
                     <div class="course-avail card-wrapper text-orange text-12px">${(course.status === 'launched') ? 'Доступно з ' + launchDate : 'Стартуємо ' + launchDate}</div>
