@@ -3,51 +3,7 @@ console.log("Start");
 let coursePhoto = document.querySelector('.active-lesson-card .course-photo');
 var player = null;
 
-//coursePhoto.addEventListener('mouseenter', (e) => startVideoPreview());
-//coursePhoto.addEventListener('mouseleave', (e) => stopVideoPreview());
-/*document.querySelectorAll('#list-courses .course-photo').forEach(node => {
-    node.addEventListener('mouseover', 
-    (e) => {
-        let target = e.target;
-        
-        //let currentUrl = new URL(location.href);
-        console.log(target.getAttribute('data-preview'));
-    })
-});*/
 
-/*    function() {
-        r()
-        u = setTimeout(function() {
-          a(t.parentNode).addClass("preview-loading")
-        }, 100)
-        s = document.createElement("VIDEO"), 
-        a(s).css({
-          position: "absolute",
-          left: "0",
-          top: "0",
-          width: t.offsetWidth + "px",
-          height: t.offsetHeight + "px",
-          background: "#000000",
-          visibility: "hidden"
-        })
-        a(s).on("error", function() { r() }) 
-        a(s).on("loadeddata", function() {
-          u && clearTimeout(u)
-          a(s.parentNode).removeClass("preview-loading")
-          a(s).css({
-            visibility: "visible"
-          })
-        }) 
-        s.controls = !1
-        s.autoplay = !0
-        s.muted = !0
-        s.loop = !0
-        s.src = e
-        s.setAttribute("webkit-playsinline", "true")
-        s.setAttribute("playsinline", "true")
-        t.parentNode.appendChild(s)
-      }
-*/
 document.getElementById('adv').addEventListener('click', 
     (e) => {
         let target = e.target.closest('button');
@@ -231,35 +187,6 @@ function updateCoursesList(data) {
 
         });
     });
-}
-
-function startVideoPreview() {
-    let videoElement = document.createElement('video');
-    videoElement.setAttribute("controls", "true");
-    videoElement.setAttribute("class", "video-js vjs-default-skin");
-    videoElement.setAttribute("width","600");
-    videoElement.setAttribute( "height", "300");
-    //videoElement.setAttribute( "src", "https://wisey.app/videos/lack-of-motivation-how-to-overcome-it/preview/AppleHLS1/preview.m3u8");
-    coursePhoto.appendChild(videoElement);
-       
-    // let iframeElement = document.createElement('iframe');
-    // iframeElement.setAttribute("width", "560");
-    // iframeElement.setAttribute("height", "315");
-    // iframeElement.setAttribute("title", "YouTube video player");
-    // iframeElement.setAttribute("frameborder", "0");
-    // iframeElement.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-    // iframeElement.setAttribute("allowfullscreen", "true");
-    // iframeElement.setAttribute("autoplay", "true");
-    // iframeElement.setAttribute("loop", "true");
-    // iframeElement.setAttribute( "src", "https://www.youtube.com/embed/giXco2jaZ_4?controls=0&start=47&autoplay=1&loop=1&mute=1");
-    // //coursePhoto.appendChild(videoElement);
-    // coursePhoto.appendChild(iframeElement);
-}
-function stopVideoPreview() {
-    let videoElement = document.querySelector('.active-lesson-card .course-photo video');
-    coursePhoto.removeChild(videoElement);
-    //let iframeElement = document.querySelector('.active-lesson-card .course-photo iframe');
-    //coursePhoto.removeChild(iframeElement);
 }
 
 function preloaderToggle(state) {

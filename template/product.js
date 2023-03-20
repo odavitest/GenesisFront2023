@@ -8,14 +8,11 @@ console.log("Current course ID is " + courseID);
 let coursePhoto = document.querySelector('.active-lesson-card .course-photo');
 var player = videojs('player');
 
-//coursePhoto.addEventListener('mouseenter', (e) => startVideoPreview());
-//coursePhoto.addEventListener('mouseleave', (e) => stopVideoPreview());
 document.getElementById('lessons-container').addEventListener('click', 
     (e) => {
         let target = e.target.closest('.lesson-card');
         target && !target.classList.contains('blocked') && switchLesson(target.getAttribute('data-index'));
     });
-
 
 let activityInfoObj = [];
 
@@ -51,15 +48,6 @@ preloaderToggle('on');
 axios.get(tokenAPIUrl).then((response) => {
     apiToken = response.data.token;
 
-    // API call to get all courses
-    // allCoursesAPIUrl = `https://api.wisey.app/api/v1/core/preview-courses?token=${apiToken}`;
-    // axios.get(allCoursesAPIUrl).then((response) => {
-    //     allCoursesData = response.data;
-    //     console.log(allCoursesData);
-    // });
-    
-    // API call to get specific course
-    
     courseAPIUrl = `https://api.wisey.app/api/v1/core/preview-courses/${courseID}?token=${apiToken}`;
     console.log("Request for course was sent!");
     axios.get(courseAPIUrl).then((response) => {
@@ -131,35 +119,6 @@ function switchLesson(lesson) {
     activityInfoObj.find(course => course.id === courseID).activeLesson = +lesson;
     console.log(activityInfoObj);
     updateDetailedPage(courseData);
-}
-
-function startVideoPreview() {
-    let videoElement = document.createElement('video');
-    videoElement.setAttribute("controls", "true");
-    videoElement.setAttribute("class", "video-js vjs-default-skin");
-    videoElement.setAttribute("width","600");
-    videoElement.setAttribute( "height", "300");
-    //videoElement.setAttribute( "src", "https://wisey.app/videos/lack-of-motivation-how-to-overcome-it/preview/AppleHLS1/preview.m3u8");
-    coursePhoto.appendChild(videoElement);
-       
-    // let iframeElement = document.createElement('iframe');
-    // iframeElement.setAttribute("width", "560");
-    // iframeElement.setAttribute("height", "315");
-    // iframeElement.setAttribute("title", "YouTube video player");
-    // iframeElement.setAttribute("frameborder", "0");
-    // iframeElement.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-    // iframeElement.setAttribute("allowfullscreen", "true");
-    // iframeElement.setAttribute("autoplay", "true");
-    // iframeElement.setAttribute("loop", "true");
-    // iframeElement.setAttribute( "src", "https://www.youtube.com/embed/giXco2jaZ_4?controls=0&start=47&autoplay=1&loop=1&mute=1");
-    // //coursePhoto.appendChild(videoElement);
-    // coursePhoto.appendChild(iframeElement);
-}
-function stopVideoPreview() {
-    let videoElement = document.querySelector('.active-lesson-card .course-photo video');
-    coursePhoto.removeChild(videoElement);
-    //let iframeElement = document.querySelector('.active-lesson-card .course-photo iframe');
-    //coursePhoto.removeChild(iframeElement);
 }
 
 function preloaderToggle(state) {
