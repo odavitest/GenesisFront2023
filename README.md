@@ -23,7 +23,7 @@ It's actually fully working solution using the Vanilla JavaScript. It includes t
 - the course curriculum section, which contains the "cards" with lessons; each card contains the lesson number, description of the lesson, and the status indicator;
 - the footer section.
 
-### How to run this masterpiece :)
+### How to run this masterpiece :) - Now, it's available here: [https://sprightly-gnome-2c3a5b.netlify.app/](https://sprightly-gnome-2c3a5b.netlify.app/)
 Prerequisites:
 1) Install the addon for your browser (I used [this one](https://www.moesif.com/blog/technical/cors/Authoritative-Guide-to-CORS-Cross-Origin-Resource-Sharing-for-REST-APIs/)), which will serve the role of proxy server to full the protection of the API server. Otherwise, it would be not possible to use the API by the scripts running on my webpages.
 2) Use any simple Live Server, like the one coming with the VS Code.
