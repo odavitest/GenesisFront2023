@@ -1446,6 +1446,10 @@ footer p {
     margin: 0 0 0 auto;
     background-repeat: no-repeat;
     display: none;
+    position: fixed;
+    top: 2rem;
+    right: 1rem;
+    z-index: 12;
 }
 @media screen and (max-width: 768px) {
     .main-menu__menu {
@@ -1457,7 +1461,14 @@ footer p {
         display: block;
         overflow: hidden;
         max-height: 0;
-        transition: max-height 0.8s ease;
+        transition: max-height 0.8s ease, padding-top 1s ease;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(255, 252, 70, 0.97);
+        z-index: 10;
     }
     #menu-btn + label {
         display: block;
@@ -1473,8 +1484,9 @@ footer p {
         border-bottom: none;
     }
     #menu-btn:checked ~ ul {
-        max-height: 300px;
+        max-height: 100vh;
         transition: max-height 0.8s ease;
+        padding-top: 100px;
     }
 
     #menu-btn:checked + label {
