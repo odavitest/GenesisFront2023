@@ -2,6 +2,7 @@
 console.log("Start");
 let coursePhoto = document.querySelector('.active-lesson-card .course-photo');
 var player = null;
+const timeoutArray = []; // {ID: timerID, target: target}
 
 
 document.getElementById('adv').addEventListener('click', 
@@ -182,25 +183,32 @@ function updateCoursesList(data) {
         node.addEventListener('mouseenter', 
         (e) => {
             let target = e.target.closest('.course-photo');
-            console.log(target);
-            let preview = target.getAttribute('data-preview');
             
-            let videoMarkup = `
-                <video id="player" width="960" height="540" class="video-js vjs-default-skin" controls muted autoplay pictureinpicture preload="auto">
-                    <source src="${preview}" type="application/x-mpegURL">
-                </video>`;
-            
-            player && player.player_ && player.dispose();
-            target.insertAdjacentHTML('beforeend', videoMarkup);
+            let timeoutID = setTimeout( () => {
+                let preview = target.getAttribute('data-preview');
+                
+                let videoMarkup = `
+                    <video id="player" width="960" height="540" class="video-js vjs-default-skin" controls muted autoplay pictureinpicture preload="auto">
+                        <source src="${preview}" type="application/x-mpegURL">
+                    </video>`;
+                
+                player && player.player_ && player.dispose();
+                target.insertAdjacentHTML('beforeend', videoMarkup);
 
-            player = videojs('player'); //reinitialize player element
-            console.log(player);
+                player = videojs('player'); //reinitialize player element
+                console.log(player);
+            }, 2000);
+            timeoutArray.push({"ID": timeoutID, "target": target});
 
         });
         node.addEventListener('mouseleave', 
         (e) => {
             let target = e.target.closest('.course-photo');
-            console.log(player);
+            let timeElementIndex = timeoutArray.findIndex(x => x.target === target);
+            if (timeElementIndex !== -1) {
+                clearTimeout(timeoutArray[timeElementIndex].ID);
+                timeoutArray.splice(timeElementIndex, 1);
+            }
             player && player.player_ && player.dispose();
 
         });
