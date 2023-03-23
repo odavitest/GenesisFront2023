@@ -43,7 +43,7 @@ More technical details:
 
 TO DO:
 1) It's easy to make these webpages responsive (I'll do it ASAP) - **Responsiveness is added on 23.03.2023**
-2) Connection/communication erros can be easily handled using Axios fuctionality in the .then().catch() code sructure. - **Connection Timeouts have been added. If network error (including the timeout error) occurs, the application uses API data stored in the js-code of the pages.**
+2) Connection/communication erros can be easily handled using Axios fuctionality in the .then().catch() code sructure. - **Connection Timeouts have been added on 23.03.2023. If network error (including the timeout error) occurs, the application uses API data stored in the js-code of the pages.**
 3) Video preview should be started with some short delay to avoid cases when user just slides mouse across the page to some desired destination.
 4) If the progress in watching video can be considered as the user's progress, then it's possible to store the progress in the local storage and show it in the status line of each lesson.
 
