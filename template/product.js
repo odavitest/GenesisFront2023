@@ -125,10 +125,12 @@ function preloaderToggle(state) {
     switch(state) {
         case 'on': {
             document.querySelector('.preloader').classList.add('active');
+            //document.querySelector('body').classList.add('loading');
             return true;
         }
         case 'off': {
             document.querySelector('.preloader').classList.remove('active');
+            //document.querySelector('body').classList.remove('loading');
             return true;
         }
         default: return false;

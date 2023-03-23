@@ -89,6 +89,12 @@ function updateAdvCourse(data) {
                 ${(advCourse.status === 'launched') ? 'Доступно з ' + launchDate : 'Старт ' + launchDate}
                 </h4>
                 <h2 class="title-h2">Безкоштовний курс</h2>
+                <div class="course-adv__right">
+                    <div class="course-rating">
+                        <div id="rating" class="stars text-16px">${advCourse.rating}</div>
+                    </div>
+                    <img id="course-image" class="profile-photo" src="${advCourse.previewImageLink + '/cover.webp'}" alt="profile photo" width="634" height="647">
+                </div>
                 <h1 class="course-adv__left-title title-h1 text-gradient blue">${advCourse.title}</h1>
                 <p class="text-22px text-italic">${advCourse.description}</p>
                 <ul class="course-adv__left-features">
@@ -99,8 +105,8 @@ function updateAdvCourse(data) {
     document.getElementById('adv').innerHTML = '';
     document.getElementById('adv').insertAdjacentHTML('beforeend', advSectionMarkup);
 
-    document.getElementById('rating').innerText = advCourse.rating;
-    document.getElementById('course-image').src = advCourse.previewImageLink + '/cover.webp';
+    //document.getElementById('rating').innerText = advCourse.rating;
+    //document.getElementById('course-image').src = advCourse.previewImageLink + '/cover.webp';
 };
 
 function updateCoursesList(data) {
@@ -194,10 +200,12 @@ function preloaderToggle(state) {
     switch(state) {
         case 'on': {
             document.querySelector('.preloader').classList.add('active');
+            //document.querySelector('body').classList.add('loading');
             return true;
         }
         case 'off': {
             document.querySelector('.preloader').classList.remove('active');
+            //document.querySelector('body').classList.remove('loading');
             return true;
         }
         default: return false;
