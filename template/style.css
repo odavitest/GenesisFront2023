@@ -17,7 +17,7 @@ body.genesis {
     background-color: white;
     background-image: url(/images/background-11.svg);
     background-size: auto;
-    background-size: contain;
+    background-size: 100%;
     background-repeat: no-repeat;
 }
 
