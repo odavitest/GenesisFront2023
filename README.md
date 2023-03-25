@@ -53,8 +53,8 @@ TO DO:
 ## React powered website
 The React solution is located in the `\website` folder.
 
-TO DO:
-Unfortunately, since the webpages with all functionality were created "from scratch", no time left for converting the webpages to React SPA (or TPA - two pages application :) )
+TO DO: 
+Unfortunately, since the webpages with all functionality were created "from scratch", no time left for converting the webpages to React SPA (or TPA - two pages application :) ) **UPD: 25.03.2023 - the model of this application written on Vanilla JS is complete now. Next challenge is to rewrite it using React**
 
 Main steps to get React application working:
 1) The main structure has been created with the help of `npx create-react-app .`
