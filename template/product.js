@@ -20,14 +20,14 @@ let activityInfoObj = [];
 let activityInfo = window.localStorage.getItem('babys-academy-courses');
 if (!activityInfo) {
     console.log("No previous activities");
-    activityInfoObj = [{"id": courseID, "activeLesson": 1}];
+    activityInfoObj = [{"id": courseID, "activeLesson": 1, "progress": [{"lessonIdx": 1, "position": 0, "duration": 0}]}];
     window.localStorage.setItem('babys-academy-courses', JSON.stringify(activityInfoObj));
 } else {
     console.log("Checking courses");
     activityInfoObj = JSON.parse(activityInfo);
     if (!activityInfoObj.find(course => course.id === courseID)) {
         console.log("New course!");
-        activityInfoObj.push({"id": courseID, "activeLesson": 1});
+        activityInfoObj.push({"id": courseID, "activeLesson": 1, "progress": [{"lessonIdx": 1, "position": 0, "duration": 0}]});
         window.localStorage.setItem('babys-academy-courses', JSON.stringify(activityInfoObj));
     } else {
         console.log("Old course!");
@@ -45,76 +45,76 @@ let courseData = null;
 
 console.log("Request for Token was sent!");
 preloaderToggle('on');
-axios.get(tokenAPIUrl, {timeout: 15000}).then((response) => {
+
+axios.get(tokenAPIUrl, {timeout: 5000}).then((response) => {
     apiToken = response.data.token;
 
     courseAPIUrl = `https://api.wisey.app/api/v1/core/preview-courses/${courseID}?token=${apiToken}`;
     console.log("Request for course was sent!");
-    axios.get(courseAPIUrl, {timeout: 20000}).then((response) => {
+    
+    axios.get(courseAPIUrl, {timeout: 5000}).then((response) => {
         courseData = response.data;
         updateDetailedPage(courseData);
         preloaderToggle('off');
     }).catch(error => {
-        console.log('Error in data request = ' + error.code);
-        console.log('Stupid API is off or very slow - Using local data');
-        courseData = getLocalCourseData(courseID);
-        updateDetailedPage(courseData);
-        preloaderToggle('off');
-    });
-}).catch(
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+
+            console.log('Data: Stupid API is off or very slow - Using local data');
+            courseData = getLocalCourseData(courseID);
+            updateDetailedPage(courseData);
+            preloaderToggle('off');
+        } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+        }
+        console.log(error.config);
+    })
+})
+.catch(
     error => {
-        console.log('Error in Token request = ' + error.code);
-        console.log('Stupid API is off or very slow - Using local data');
-        courseData = getLocalCourseData(courseID);
-        updateDetailedPage(courseData);
-        preloaderToggle('off');
-    });
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            console.log('Token: Stupid API is off or very slow - Using local data');
+            courseData = getLocalCourseData(courseID);
+            updateDetailedPage(courseData);
+            preloaderToggle('off');
+        } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+        }
+        console.log(error.config);
+    }
+);
 
 function updateDetailedPage(data) {
-    document.getElementById('course-title').innerText = data.title;
-    document.getElementById('course-descr').innerText = data.description;
-    document.getElementById('rating').innerText = data.rating;
-    document.getElementById('course-image').src = data.previewImageLink + '/cover.webp';
-    let launchDate = new Date(data.launchDate)
-        .toLocaleDateString('uk', 
-            { 
-                weekday: "short",
-                year: "numeric",
-                month: "2-digit",
-                day: "numeric",
-                minute: "2-digit",
-                hour: "2-digit"
-            });
-    document.getElementById('launch-date').innerText = (data.status === 'launched') ? 'Доступно з ' + launchDate : 'Стартуємо ' + launchDate;
-    document.getElementById('duration').innerText = data.duration + " годин навчання, практики";
-    document.getElementById('lessons').innerText = data.lessons.length + " уроків";
-    document.getElementById('skills').innerHTML = '';
-    if (data?.meta?.skills) {
-        data.meta.skills.forEach(skill => {
-        const markup = `<li class="features">${skill}</li>`;
-        document.getElementById('skills').insertAdjacentHTML('beforeend', markup);
-    })} else {
-        document.getElementById('skills').innerHTML = `<li class="features">Чудові вміння!</li>`;
-    }
-    document.getElementById('lessons-container').innerHTML = '';
-    data.lessons.sort((lesson, prev) => lesson.order - prev.order ).forEach((lesson, index) => {
-        const markup = 
-        `<div class="lesson-card ${lesson.status === 'locked' ? 'blocked' : (activityInfoObj.find(course => course.id === courseID).activeLesson === index + 1) ? 'active' : '' }" data-index = "${index + 1}">
-            <div class="lesson__circle-block">
-                <div class="lesson__day">
-                    <p class="text-14px text-gradient orange">Урок</p>
-                    <p class="lesson__number text-gradient orange">${index + 1}</p>
-                </div>
-            </div>
-            <div class="lesson__status text-16px">${lesson.status === 'locked' ? 'Статус: Заблоковано' : 'Статус виконання: 10%'}</div>
-            <div class="lesson__info text-16px">${lesson.title}</div>
-        </div>`;
+    
+    const curCourse = activityInfoObj.find(course => course.id === courseID);
+    const activeLesson = curCourse.activeLesson;
+    const curActiveProgr = curCourse.progress.find(les => les.lessonIdx === activeLesson);
+    
+    // Sort lessons by order to access them by index in array
+    data.lessons = data.lessons.sort((lesson, prev) => lesson.order - prev.order);
 
-        document.getElementById('lessons-container').insertAdjacentHTML('beforeend', markup);
-        
-    });
     // Render active lesson card
-    let activeLesson = activityInfoObj.find(course => course.id === courseID).activeLesson;
     document.getElementById('active-lesson-photo').src = data.lessons[activeLesson-1].previewImageLink + '/lesson-' + data.lessons[activeLesson-1].order + ".webp";
     let videoMarkup = `
             <video id="player" width="1920" height="1080" poster="${data.lessons[activeLesson-1].previewImageLink + '/lesson-' + data.lessons[activeLesson-1].order + '.webp'}" class="video-js vjs-default-skin" controls preload="auto">
@@ -124,15 +124,126 @@ function updateDetailedPage(data) {
     player && player.dispose();
     coursePhoto.insertAdjacentHTML('beforeend', videoMarkup);
     player = videojs('player'); //reinitialize player element
-    document.getElementById('active-lesson-number').innerText = activeLesson;
-    document.getElementById('active-lesson-descr').innerText = data.lessons[activeLesson-1].title;
+    player.ready(function() {
+        if (curActiveProgr) {
+            player.currentTime(curActiveProgr.position);
+            //curActiveProgr.duration = player.duration();
+        }
+    
+        document.getElementById('active-lesson-number').innerText = activeLesson;
+        document.getElementById('active-lesson-descr').innerText = data.lessons[activeLesson-1].title;
+        console.log(data.lessons[activeLesson-1].title);
+
+        // Render course detailed info 
+        document.getElementById('course-title').innerText = data.title;
+        document.getElementById('course-descr').innerText = data.description;
+        document.getElementById('rating').innerText = data.rating;
+        document.getElementById('course-image').src = data.previewImageLink + '/cover.webp';
+        let launchDate = new Date(data.launchDate)
+            .toLocaleDateString('uk', 
+                { 
+                    weekday: "short",
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "numeric",
+                    minute: "2-digit",
+                    hour: "2-digit"
+                });
+        document.getElementById('launch-date').innerText = (data.status === 'launched') ? 'Доступно з ' + launchDate : 'Стартуємо ' + launchDate;
+        document.getElementById('duration').innerText = data.duration + " годин навчання, практики";
+        document.getElementById('lessons').innerText = data.lessons.length + " уроків";
+        document.getElementById('skills').innerHTML = '';
+        if (data?.meta?.skills) {
+            data.meta.skills.forEach(skill => {
+            const markup = `<li class="features">${skill}</li>`;
+            document.getElementById('skills').insertAdjacentHTML('beforeend', markup);
+        })} else {
+            document.getElementById('skills').innerHTML = `<li class="features">Чудові вміння!</li>`;
+        }
+        
+        //  Render lesson cards
+        document.getElementById('lessons-container').innerHTML = '';
+        data.lessons.forEach((lesson, index) => {
+            
+            const isActive = curCourse.activeLesson === index + 1;
+            const curLesson = curCourse.progress.find(les => les.lessonIdx === index + 1);
+            
+            let statusStr = '';
+            if (curLesson) {
+                statusStr = curLesson.duration ? (curLesson.position/curLesson.duration*100).toFixed(0) + '%' : curLesson.position.toFixed(0) + ' sec';
+            } else {
+                statusStr = "Новий";
+            }
+            const markup = 
+            `<div class="lesson-card ${lesson.status === 'locked' ? 'blocked' : (isActive) ? 'active' : '' }" data-index = "${index + 1}">
+                <div class="lesson__circle-block">
+                    <div class="lesson__day">
+                        <p class="text-14px text-gradient orange">Урок</p>
+                        <p class="lesson__number text-gradient orange">${index + 1}</p>
+                    </div>
+                </div>
+                <div class="lesson__status text-16px">${lesson.status === 'locked' ? 'Статус: Заблоковано' : 'Статус виконання: ' + statusStr}</div>
+                <div class="lesson__info text-16px">${lesson.title}</div>
+            </div>`;
+
+            document.getElementById('lessons-container').insertAdjacentHTML('beforeend', markup);
+            
+        });
+        console.log(curCourse.progress);
+    });
 }
 
 function switchLesson(lesson) {
-    console.log('We are switching to lesson ' + lesson);
-    activityInfoObj.find(course => course.id === courseID).activeLesson = +lesson;
-    console.log(activityInfoObj);
-    updateDetailedPage(courseData);
+    
+    const actCourse = activityInfoObj.find(course => course.id === courseID);
+    const prevActLesson = actCourse.activeLesson;
+    console.log('We are switching to lesson ' + lesson + ' from ' + prevActLesson);
+    
+    let prevLesIndex = actCourse.progress.findIndex(les => les.lessonIdx === prevActLesson);
+
+    // Check progress for prev lesson
+    player.ready(function() {
+        let curDur = player.duration();
+        let curPos = player.currentTime();
+        console.log("Saving progress", curPos, curDur);
+
+        if (prevLesIndex !== -1) {
+            if (curPos > actCourse.progress[prevLesIndex].position) {
+                actCourse.progress[prevLesIndex].position = curPos;
+                actCourse.progress[prevLesIndex].duration = curDur;
+            } 
+        } else {
+            actCourse.progress.push({"lessonIdx": prevActLesson, "position": curPos, "duration": curDur});
+        }
+        actCourse.activeLesson = +lesson; // Set new active lesson
+
+        window.localStorage.setItem('babys-academy-courses', JSON.stringify(activityInfoObj));
+        updateDetailedPage(courseData);
+    });
+}
+
+// This function is called on beforeunload event to save current progress
+function lastSave() {
+    const actCourse = activityInfoObj.find(course => course.id === courseID);
+    const actLesson = actCourse.activeLesson;
+    
+    let lesIndex = actCourse.progress.findIndex(les => les.lessonIdx === actLesson);
+    
+    player.ready(function () {
+        let curDur = player.duration();
+        let curPos = player.currentTime();
+
+        if (lesIndex !== -1) {
+            if (curPos > actCourse.progress[lesIndex].position) {
+                actCourse.progress[lesIndex].position = curPos;
+                actCourse.progress[lesIndex].duration = curDur;
+            } 
+        } else {
+            actCourse.progress.push({"lessonIdx": actLesson, "position": curPos, "duration": curDur});
+        }
+
+        window.localStorage.setItem('babys-academy-courses', JSON.stringify(activityInfoObj));
+    });
 }
 
 function preloaderToggle(state) {

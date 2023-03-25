@@ -13,7 +13,7 @@
     <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
     <!-- <script src="videojs-contrib-hlsjs.min.js"></script> -->
 </head>
-<body class="genesis">
+<body class="genesis" onbeforeunload="return lastSave()">
     <div class="app"> <!-- This is wrapper div for React application -->
         <div class="preloader active">
             <div class="preloader-content bounce"></div>           
