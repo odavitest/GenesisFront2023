@@ -25,7 +25,7 @@ It's actually fully working solution using the Vanilla JavaScript. It includes t
 
 ### How to run this masterpiece :) - Now, it's available here: [https://sprightly-gnome-2c3a5b.netlify.app/](https://sprightly-gnome-2c3a5b.netlify.app/)
 Prerequisites:
-1) Install the addon for your browser (I used [this one](https://www.moesif.com/blog/technical/cors/Authoritative-Guide-to-CORS-Cross-Origin-Resource-Sharing-for-REST-APIs/)), which will serve the role of proxy server to full the protection of the API server. Otherwise, it would be not possible to use the API by the scripts running on my webpages.
+1) Install the addon for your browser (I used [this one](https://www.moesif.com/blog/technical/cors/Authoritative-Guide-to-CORS-Cross-Origin-Resource-Sharing-for-REST-APIs/) **UPD: Don't use it!!! It's super slow! Finally, I found this one -** ["Allow CORS: Access-Control-Allow-Origin"](https://mybrowseraddon.com/access-control-allow-origin.html) **and I'm happy with it :) **), which will serve the role of proxy server to full the protection of the API server. Otherwise, it would be not possible to use the API by the scripts running on my webpages.
 2) Use any simple Live Server, like the one coming with the VS Code.
 
 How everything works:
@@ -43,9 +43,12 @@ More technical details:
 
 TO DO:
 1) It's easy to make these webpages responsive (I'll do it ASAP) - **Responsiveness is added on 23.03.2023**
+
 2) Connection/communication erros can be easily handled using Axios fuctionality in the .then().catch() code sructure. - **Connection Timeouts have been added on 23.03.2023. If network error (including the timeout error) occurs, the application uses API data stored in the js-code of the pages.**
+
 3) Video preview should be started with some short delay to avoid cases when user just slides mouse across the page to some desired destination. - **Delay of 2 seconds in video preview is added on 23.03.2023. Now, moving mouse over preview areas doesn't start video immediately. Only hovering for more than 2 seconds does.**
-4) If the progress in watching video can be considered as the user's progress, then it's possible to store the progress in the local storage and show it in the status line of each lesson.
+
+4) If the progress in watching video can be considered as the user's progress, then it's possible to store the progress in the local storage and show it in the status line of each lesson. - **That was tricky (mainly because of absence of experience working with video.js), but I managed to add this functionality on 25.03.2023. Now the progress information is stored in the localStorage of the browser in the format: Course ID, active lesson, [lessson's progress info]. The saving process is triggered by 2 events: changing the lesson and closing current browser tab/window. When user returns to the course, the user's progress is recalled and the video playback is set to the last position.**
 
 ## React powered website
 The React solution is located in the `\website` folder.
