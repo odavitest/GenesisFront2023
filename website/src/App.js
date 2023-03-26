@@ -8,6 +8,8 @@ function App() {
     
     const [ active, setActive ] = React.useState(true);
     
+    document.querySelector('body').classList.add('genesis');
+
     return (
         <div className="App">
         
