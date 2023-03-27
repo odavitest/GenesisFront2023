@@ -117,7 +117,7 @@ function updateDetailedPage(data) {
     // Render active lesson card
     document.getElementById('active-lesson-photo').src = data.lessons[activeLesson-1].previewImageLink + '/lesson-' + data.lessons[activeLesson-1].order + ".webp";
     let videoMarkup = `
-            <video id="player" width="1920" height="1080" poster="${data.lessons[activeLesson-1].previewImageLink + '/lesson-' + data.lessons[activeLesson-1].order + '.webp'}" class="video-js vjs-default-skin" controls preload="auto">
+            <video id="player" width="1920" height="1080" poster="${data.lessons[activeLesson-1].previewImageLink + '/lesson-' + data.lessons[activeLesson-1].order + '.webp'}" className="video-js vjs-default-skin" controls preload="auto">
             <source src="${data.lessons[activeLesson-1].link}" type="application/x-mpegURL">
         </video>`;
     
@@ -155,10 +155,10 @@ function updateDetailedPage(data) {
         document.getElementById('skills').innerHTML = '';
         if (data?.meta?.skills) {
             data.meta.skills.forEach(skill => {
-            const markup = `<li class="features">${skill}</li>`;
+            const markup = `<li className="features">${skill}</li>`;
             document.getElementById('skills').insertAdjacentHTML('beforeend', markup);
         })} else {
-            document.getElementById('skills').innerHTML = `<li class="features">Чудові вміння!</li>`;
+            document.getElementById('skills').innerHTML = `<li className="features">Чудові вміння!</li>`;
         }
         
         //  Render lesson cards
@@ -175,15 +175,15 @@ function updateDetailedPage(data) {
                 statusStr = "Новий";
             }
             const markup = 
-            `<div class="lesson-card ${lesson.status === 'locked' ? 'blocked' : (isActive) ? 'active' : '' }" data-index = "${index + 1}">
-                <div class="lesson__circle-block">
-                    <div class="lesson__day">
-                        <p class="text-14px text-gradient orange">Урок</p>
-                        <p class="lesson__number text-gradient orange">${index + 1}</p>
+            `<div className="lesson-card ${lesson.status === 'locked' ? 'blocked' : (isActive) ? 'active' : '' }" data-index = "${index + 1}">
+                <div className="lesson__circle-block">
+                    <div className="lesson__day">
+                        <p className="text-14px text-gradient orange">Урок</p>
+                        <p className="lesson__number text-gradient orange">${index + 1}</p>
                     </div>
                 </div>
-                <div class="lesson__status text-16px">${lesson.status === 'locked' ? 'Статус: Заблоковано' : 'Статус виконання: ' + statusStr}</div>
-                <div class="lesson__info text-16px">${lesson.title}</div>
+                <div className="lesson__status text-16px">${lesson.status === 'locked' ? 'Статус: Заблоковано' : 'Статус виконання: ' + statusStr}</div>
+                <div className="lesson__info text-16px">${lesson.title}</div>
             </div>`;
 
             document.getElementById('lessons-container').insertAdjacentHTML('beforeend', markup);

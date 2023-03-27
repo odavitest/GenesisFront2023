@@ -97,23 +97,23 @@ function updateAdvCourse(data) {
                 hour: "2-digit"
             });
     console.log('Launch date is ' + launchDate);
-    let advSectionMarkup = `<h4 class="course-adv__left-date text-gradient orange">
+    let advSectionMarkup = `<h4 className="course-adv__left-date text-gradient orange">
                 ${(advCourse.status === 'launched') ? 'Доступно з ' + launchDate : 'Старт ' + launchDate}
                 </h4>
-                <h2 class="title-h2">Безкоштовний курс</h2>
-                <div class="course-adv__right">
-                    <div class="course-rating">
-                        <div id="rating" class="stars text-16px">${advCourse.rating}</div>
+                <h2 className="title-h2">Безкоштовний курс</h2>
+                <div className="course-adv__right">
+                    <div className="course-rating">
+                        <div id="rating" className="stars text-16px">${advCourse.rating}</div>
                     </div>
-                    <img id="course-image" class="profile-photo" src="${advCourse.previewImageLink + '/cover.webp'}" alt="profile photo" width="634" height="647">
+                    <img id="course-image" className="profile-photo" src="${advCourse.previewImageLink + '/cover.webp'}" alt="profile photo" width="634" height="647">
                 </div>
-                <h1 class="course-adv__left-title title-h1 text-gradient blue">${advCourse.title}</h1>
-                <p class="text-22px text-italic">${advCourse.description}</p>
-                <ul class="course-adv__left-features">
-                    <li class="features">${advCourse.duration + ' годин навчання, практики'}</li>
-                    <li class="features">${advCourse.lessonsCount + ' уроків'}</li>
+                <h1 className="course-adv__left-title title-h1 text-gradient blue">${advCourse.title}</h1>
+                <p className="text-22px text-italic">${advCourse.description}</p>
+                <ul className="course-adv__left-features">
+                    <li className="features">${advCourse.duration + ' годин навчання, практики'}</li>
+                    <li className="features">${advCourse.lessonsCount + ' уроків'}</li>
                 </ul>
-                <button class="btn filled-gradient orange text-20px" data-url="${'/product.html?course=' + advCourse.id}">Переглянути</button>`;
+                <button className="btn filled-gradient orange text-20px" data-url="${'/product.html?course=' + advCourse.id}">Переглянути</button>`;
     document.getElementById('adv').innerHTML = '';
     document.getElementById('adv').insertAdjacentHTML('beforeend', advSectionMarkup);
 
@@ -141,24 +141,24 @@ function updateCoursesList(data) {
                     });
                     
             const markup = `
-            <div class="list-courses__card">
+            <div className="list-courses__card">
                 <div>
-                    <div class="upper-status card-wrapper">
-                        <div class="price text-orange text-16px">Безкоштовно</div>
-                        <div class="stars text-16px">${course.rating}</div>
+                    <div className="upper-status card-wrapper">
+                        <div className="price text-orange text-16px">Безкоштовно</div>
+                        <div className="stars text-16px">${course.rating}</div>
                     </div>
-                    <div class="course-photo" data-preview="${(course?.meta?.courseVideoPreview?.link) ? course.meta.courseVideoPreview.link : 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'}">
+                    <div className="course-photo" data-preview="${(course?.meta?.courseVideoPreview?.link) ? course.meta.courseVideoPreview.link : 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'}">
                         <img src="${course.previewImageLink + '/cover.webp'}" alt="preview">
                     </div>
-                    <div class="course-avail card-wrapper text-orange text-12px">${(course.status === 'launched') ? 'Доступно з ' + launchDate : 'Стартуємо ' + launchDate}</div>
-                    <h4 class="course__title card-wrapper text-20px text-gradient blue">${course.title}</h4>
-                    <p class="course-abstract card-wrapper text-16px">${course.description}</p>
-                    <div class="course-meta card-wrapper">
-                        <div class="lessons text-16px">${course.lessonsCount} уроки</div>
-                        <div class="days text-16px">${course.duration} годин</div>
+                    <div className="course-avail card-wrapper text-orange text-12px">${(course.status === 'launched') ? 'Доступно з ' + launchDate : 'Стартуємо ' + launchDate}</div>
+                    <h4 className="course__title card-wrapper text-20px text-gradient blue">${course.title}</h4>
+                    <p className="course-abstract card-wrapper text-16px">${course.description}</p>
+                    <div className="course-meta card-wrapper">
+                        <div className="lessons text-16px">${course.lessonsCount} уроки</div>
+                        <div className="days text-16px">${course.duration} годин</div>
                     </div>
                 </div>
-                <button class="btn text-16px filled-gradient gray" data-url="${'/product.html?course=' + course.id}">Переглянути</button>
+                <button className="btn text-16px filled-gradient gray" data-url="${'/product.html?course=' + course.id}">Переглянути</button>
             </div>`;
 
             document.getElementById('list-courses').insertAdjacentHTML('beforeend', markup);
@@ -167,9 +167,9 @@ function updateCoursesList(data) {
 
     // Render Pagination block
     const paginationMarkup = `
-        <button class="pagination-left"></button>
-        <div class="pagination-page filled-gradient gray text-16px">Сторінка ${currentPage + '/' + numberPages}</div>
-        <button class="pagination-right on"></button>`;
+        <button className="pagination-left"></button>
+        <div className="pagination-page filled-gradient gray text-16px">Сторінка ${currentPage + '/' + numberPages}</div>
+        <button className="pagination-right on"></button>`;
     
     document.querySelector('.list-courses__pagination').innerHTML = '';
     if (numberPages > 1) {
@@ -188,7 +188,7 @@ function updateCoursesList(data) {
                 let preview = target.getAttribute('data-preview');
                 
                 let videoMarkup = `
-                    <video id="player" width="960" height="540" class="video-js vjs-default-skin" controls muted autoplay pictureinpicture preload="auto">
+                    <video id="player" width="960" height="540" className="video-js vjs-default-skin" controls muted autoplay pictureinpicture preload="auto">
                         <source src="${preview}" type="application/x-mpegURL">
                     </video>`;
                 
